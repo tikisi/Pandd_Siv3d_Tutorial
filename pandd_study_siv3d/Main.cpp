@@ -21,9 +21,9 @@ void Main()
         }
 
         if(posX < 0) posX = 0;
-        if(posX + 80 > Scene::Width()) posX = 80 + Scene::Width();
+        if(posX + 80 > Scene::Width()) posX = Scene::Width() - 80;
         if(posY < 0) posY = 0;
-        if(posY + 80 < Scene::Height()) posY = 80 + Scene::Height();
+        if(posY + 80 > Scene::Height()) posY = Scene::Height() - 80;
 
 
         Rect(posX, posY, 80, 80).draw(Palette::Orange);
