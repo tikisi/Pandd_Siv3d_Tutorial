@@ -2,8 +2,8 @@
 
 void Main()
 {
-    int posX = Scene::Center().x;
-    int posY = Scene::Center().y;
+    int posX = 20;
+    int posY = 40;
 
     while (System::Update())
     {
@@ -19,6 +19,12 @@ void Main()
         if(KeyDown.pressed()) {
             posY += 5;
         }
+
+        if(posX < 0) posX = 0;
+        if(posX + 80 > Scene::Width()) posX = 80 + Scene::Width();
+        if(posY < 0) posY = 0;
+        if(posY + 80 < Scene::Height()) posY = 80 + Scene::Height();
+
 
         Rect(posX, posY, 80, 80).draw(Palette::Orange);
     }
