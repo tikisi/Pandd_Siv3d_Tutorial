@@ -1,32 +1,34 @@
 ﻿# include <Siv3D.hpp> // OpenSiv3D v0.4.3
 
+struct Character {
+    int posX, posY;
+    int width, height;
+};
+
 void Main()
 {
-    int posX = 20;
-    int posY = 40;
+    Character player;
+    player.posX = 0;
+    player.posY = 300;
+    player.width = 60;
+    player.height = 60;
 
     while (System::Update())
     {
-        if (KeyRight.pressed()) {
-            posX += 5;
-        }
-        if (KeyLeft.pressed()) {
-            posX -= 5;
-        }
-        if (KeyUp.pressed()) {
-            posY -= 5;
-        }
-        if(KeyDown.pressed()) {
-            posY += 5;
-        }
 
-        if(posX < 0) posX = 0;
-        if(posX + 80 > Scene::Width()) posX = Scene::Width() - 80;
-        if(posY < 0) posY = 0;
-        if(posY + 80 > Scene::Height()) posY = Scene::Height() - 80;
+        // プレイヤーの移動
+        if (KeyRight.pressed()) player.posX += 5;
+        if (KeyLeft.pressed()) player.posX -= 5;
+        if (KeyUp.pressed()) player.posY -= 5;
+        if (KeyDown.pressed()) player.posY += 5;
 
+        // 画面外処理
+        if (player.posX < 0) player.posX = 0;
+        if (player.posX + player.width > Scene::Width()) player.posX = Scene::Width() - player.width;
+        if (player.posY < 0) player.posY = 0;
+        if (player.posY + player.height > Scene::Height()) player.posY = Scene::Height() - player.height;
 
-        Rect(posX, posY, 80, 80).draw(Palette::Orange);
+        Rect(player.posX, player.posY, player.width, player.height).draw(Palette::Orange);
     }
 }
 
