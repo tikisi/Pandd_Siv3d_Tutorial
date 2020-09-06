@@ -5,32 +5,48 @@ struct Character {
     int width, height;
 };
 
+// プレイヤー
+Character player;
+void PlayerInit();
+void PlayerUpdate();
+void PlayerDraw();
+
 void Main()
 {
-    Character player;
+    PlayerInit();
+
+    while (System::Update())
+    {
+        PlayerUpdate();
+        PlayerDraw();
+    }
+}
+
+void PlayerInit() {
     player.posX = 0;
     player.posY = 300;
     player.width = 60;
     player.height = 60;
-
-    while (System::Update())
-    {
-
-        // プレイヤーの移動
-        if (KeyRight.pressed()) player.posX += 5;
-        if (KeyLeft.pressed()) player.posX -= 5;
-        if (KeyUp.pressed()) player.posY -= 5;
-        if (KeyDown.pressed()) player.posY += 5;
-
-        // 画面外処理
-        if (player.posX < 0) player.posX = 0;
-        if (player.posX + player.width > Scene::Width()) player.posX = Scene::Width() - player.width;
-        if (player.posY < 0) player.posY = 0;
-        if (player.posY + player.height > Scene::Height()) player.posY = Scene::Height() - player.height;
-
-        Rect(player.posX, player.posY, player.width, player.height).draw(Palette::Orange);
-    }
 }
+
+void PlayerUpdate() {
+    // プレイヤーの移動
+    if (KeyRight.pressed()) player.posX += 5;
+    if (KeyLeft.pressed()) player.posX -= 5;
+    if (KeyUp.pressed()) player.posY -= 5;
+    if (KeyDown.pressed()) player.posY += 5;
+
+    // 画面外処理
+    if (player.posX < 0) player.posX = 0;
+    if (player.posX + player.width > Scene::Width()) player.posX = Scene::Width() - player.width;
+    if (player.posY < 0) player.posY = 0;
+    if (player.posY + player.height > Scene::Height()) player.posY = Scene::Height() - player.height;
+}
+
+void PlayerDraw() {
+    Rect(player.posX, player.posY, player.width, player.height).draw(Palette::Orange);
+}
+
 
 //
 // = アドバイス =
