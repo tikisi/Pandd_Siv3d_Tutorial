@@ -3,6 +3,7 @@
 struct Character {
     int posX, posY;
     int width, height;
+    int life;
 };
 
 // プレイヤー
@@ -11,14 +12,24 @@ void PlayerInit();
 void PlayerUpdate();
 void PlayerDraw();
 
+// 敵
+#define ENEMY_NUM 20
+Character enemy[ENEMY_NUM];
+void enemeyInit();
+void enemeyUpdate();
+void enemyDraw();
+
 void Main()
 {
     PlayerInit();
+    enemeyInit();
 
     while (System::Update())
     {
         PlayerUpdate();
+        enemeyUpdate();
         PlayerDraw();
+        enemyDraw();
     }
 }
 
@@ -45,6 +56,42 @@ void PlayerUpdate() {
 
 void PlayerDraw() {
     Rect(player.posX, player.posY, player.width, player.height).draw(Palette::Orange);
+}
+
+void enemeyInit() {
+    for (int i = 0; i < ENEMY_NUM; i++) {
+        enemy[i].height = 50;
+        enemy[i].width = 50;
+        enemy[i].posX = Scene::Width();
+        enemy[i].posY = Random<int>(Scene::Height() - enemy[i].height);
+        enemy[i].life = 0;
+    }
+}
+
+void enemeyUpdate() {
+    // 敵の出現
+    for (int i = 0; i < ENEMY_NUM; i++) {
+        if (enemy[i].life == 0) {
+            if (Random<int>(150) == 0) {
+                enemy[i].life = 5;
+            }
+        }
+    }
+
+    // 移動
+    for (int i = 0; i < ENEMY_NUM; i++) {
+        if (enemy[i].life != 0) {
+            enemy[i].posX -= 6;
+        }
+    }
+}
+
+void enemyDraw() {
+    for (int i = 0; i < ENEMY_NUM; i++) {
+        if (enemy[i].life != 0) {
+            Rect(enemy[i].posX, enemy[i].posY, enemy[i].width, enemy[i].height).draw(Palette::Red);
+        }
+    }
 }
 
 
