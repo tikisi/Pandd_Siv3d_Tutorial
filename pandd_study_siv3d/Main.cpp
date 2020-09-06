@@ -84,6 +84,17 @@ void enemeyUpdate() {
             enemy[i].posX -= 6;
         }
     }
+
+    // 画面外に出たら
+    for (int i = 0; i < ENEMY_NUM; i++) {
+        if (enemy[i].life != 0) {
+            if (enemy[i].posX + enemy[i].width < 0) {
+                enemy[i].posX = Scene::Width();
+                enemy[i].posY = Random<int>(Scene::Height() - enemy[i].height);
+                enemy[i].life = 0;
+            }
+        }
+    }
 }
 
 void enemyDraw() {
