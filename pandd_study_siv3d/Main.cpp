@@ -7,26 +7,18 @@ void Main()
 
     while (System::Update())
     {
-        if (KeyRight.pressed()) {
-            posX += 5;
-        }
-        if (KeyLeft.pressed()) {
-            posX -= 5;
-        }
-        if (KeyUp.pressed()) {
-            posY -= 5;
-        }
-        if(KeyDown.pressed()) {
-            posY += 5;
-        }
+        if (KeyRight.pressed()) posX += 5;
+        if (KeyLeft.pressed()) posX -= 5;
+        if (KeyUp.pressed()) posY -= 5;
+        if (KeyDown.pressed()) posY += 5;
 
-        if(posX < 0) posX = 0;
-        if(posX + 80 > Scene::Width()) posX = Scene::Width() - 80;
-        if(posY < 0) posY = 0;
-        if(posY + 80 > Scene::Height()) posY = Scene::Height() - 80;
+        if (posX < 0) posX = 0;
+        if (posX + 60 > Scene::Width()) posX = Scene::Width() - 60;
+        if (posY < 0) posY = 0;
+        if (posY + 60 > Scene::Height()) posY = Scene::Height() - 60;
 
 
-        Rect(posX, posY, 80, 80).draw(Palette::Orange);
+        Rect(posX, posY, 60, 60).draw(Palette::Orange);
     }
 }
 
