@@ -19,17 +19,27 @@ void enemeyInit();
 void enemeyUpdate();
 void enemyDraw();
 
+// 弾
+#define SHOT_NUM 20
+Character shot[SHOT_NUM];
+void shotInit();
+void shotUpdate();
+void shotDraw();
+
 void Main()
 {
     PlayerInit();
     enemeyInit();
+    shotInit();
 
     while (System::Update())
     {
         PlayerUpdate();
         enemeyUpdate();
+        shotUpdate();
         PlayerDraw();
         enemyDraw();
+        shotDraw();
     }
 }
 
@@ -103,6 +113,54 @@ void enemyDraw() {
             Rect(enemy[i].posX, enemy[i].posY, enemy[i].width, enemy[i].height).draw(Palette::Red);
         }
     }
+}
+
+void shotInit() {
+    for (int i = 0; i < SHOT_NUM; i++) {
+        shot[i].height = 10;
+        shot[i].width = 10;
+        shot[i].posX = 0;
+        shot[i].posY = 0;
+        shot[i].life = 0;
+    }
+}
+
+void shotUpdate() {
+    // 出現
+    if (KeySpace.down()) {
+        for (int i = 0; i < SHOT_NUM; i++) {
+            if (shot[i].life == 0) {
+                shot[i].life = 1;
+                shot[i].posX = player.posX + player.width;
+                shot[i].posY = player.posY + player.height / 2;
+                break;
+            }
+        }
+    }
+
+    // 移動
+    for (int i = 0; i < SHOT_NUM; i++) {
+        if (shot[i].life != 0) {
+            shot[i].posX += 6;
+        }
+    }
+
+    // 画面外に出たら
+    for(int i = 0; i < SHOT_NUM; i++) {
+        if (shot[i].posX > Scene::Width()) {
+            shot[i].life = 0;
+            shot[i].posX = 0;
+            shot[i].posY = 0;
+        }
+    }
+}
+
+void shotDraw() {
+    for(int i = 0; i < SHOT_NUM; i++) {
+        if(shot[i].life != 0) {
+            Rect(shot[i].posX, shot[i].posY, shot[i].width, shot[i].height).draw(Palette::White);
+        }
+    } 
 }
 
 
