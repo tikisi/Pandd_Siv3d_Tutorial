@@ -105,6 +105,31 @@ void enemeyUpdate() {
             }
         }
     }
+
+    // 弾との当たり判定
+    for (int i = 0; i < ENEMY_NUM; i++) {
+        if (enemy[i].life != 0) {
+            for (int j = 0; j < SHOT_NUM; j++) {
+                if (shot[j].life != 0) {
+                    Rect enemyRect = Rect(enemy[i].posX, enemy[i].posY, enemy[i].width, enemy[i].height);
+                    Rect shotRect = Rect(shot[j].posX, shot[j].posY, shot[j].width, shot[j].height);
+                    if (shotRect.intersects(enemyRect)) {
+                        // 弾を待機状態へ
+                        shot[j].life = 0;
+                        shot[j].posX = 0;
+                        shot[j].posY = 0;
+
+                        // 敵を待機状態へ
+                        if (--enemy[i].life == 0) {
+                            enemy[i].posX = Scene::Width();
+                            enemy[i].posY = Random<int>(Scene::Height() - enemy[i].height);
+                            enemy[i].life = 0;
+                        }
+                    }
+                }
+            }
+        }
+    }
 }
 
 void enemyDraw() {
@@ -151,31 +176,6 @@ void shotUpdate() {
             shot[i].life = 0;
             shot[i].posX = 0;
             shot[i].posY = 0;
-        }
-    }
-
-    // 弾との当たり判定
-    for (int i = 0; i < ENEMY_NUM; i++) {
-        if (enemy[i].life != 0) {
-            for (int j = 0; j < SHOT_NUM; j++) {
-                if (shot[j].life != 0) {
-                    Rect enemyRect = Rect(enemy[i].posX, enemy[i].posY, enemy[i].width, enemy[i].height);
-                    Rect shotRect = Rect(shot[j].posX, shot[j].posY, shot[j].width, shot[j].height);
-                    if (shotRect.intersects(enemyRect)) {
-                        // 弾を待機状態へ
-                        shot[j].life = 0;
-                        shot[j].posX = 0;
-                        shot[j].posY = 0;
-
-                        // 敵を待機状態へ
-                        if (--enemy[i].life == 0) {
-                            enemy[i].posX = Scene::Width();
-                            enemy[i].posY = Random<int>(Scene::Height() - enemy[i].height);
-                            enemy[i].life = 0;
-                        }
-                    }
-                }
-            }
         }
     }
 }
