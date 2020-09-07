@@ -48,6 +48,7 @@ void PlayerInit() {
     player.posY = 300;
     player.width = 60;
     player.height = 60;
+    player.life = 5;
 }
 
 void PlayerUpdate() {
@@ -62,6 +63,23 @@ void PlayerUpdate() {
     if (player.posX + player.width > Scene::Width()) player.posX = Scene::Width() - player.width;
     if (player.posY < 0) player.posY = 0;
     if (player.posY + player.height > Scene::Height()) player.posY = Scene::Height() - player.height;
+
+    // 敵と当たったとき
+    for (int i = 0; i < ENEMY_NUM; i++) {
+        if (enemy[i].life != 0) {
+            Rect enemyRect = Rect(enemy[i].posX, enemy[i].posY, enemy[i].width, enemy[i].height);
+            Rect playerRect = Rect(player.posX, player.posY, player.width, player.height);
+            if (playerRect.intersects(enemyRect)) {
+                enemy[i].posX = Scene::Width();
+                enemy[i].posY = Random<int>(Scene::Height() - enemy[i].height);
+                enemy[i].life = 0;
+
+                if (--player.life == 0) {
+                    System::Exit();
+                }
+            }
+        }
+    }
 }
 
 void PlayerDraw() {
