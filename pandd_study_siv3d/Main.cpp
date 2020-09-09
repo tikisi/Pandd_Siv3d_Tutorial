@@ -159,6 +159,7 @@ void enemyDraw() {
     for (int i = 0; i < ENEMY_NUM; i++) {
         if (enemy[i].life != 0) {
             Rect(enemy[i].posX, enemy[i].posY, enemy[i].width, enemy[i].height).draw(Palette::Red);
+            FontAsset(U"font20")(enemy[i].life).draw(enemy[i].posX, enemy[i].posY, Palette::Black);
         }
     }
 }
