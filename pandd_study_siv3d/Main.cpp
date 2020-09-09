@@ -6,6 +6,7 @@ struct Character {
     int life;
 };
 
+
 // プレイヤー
 Character player;
 void PlayerInit();
@@ -31,6 +32,9 @@ void Main()
     PlayerInit();
     enemeyInit();
     shotInit();
+
+    // アセットの登録
+    FontAsset::Register(U"font20", 20);
 
     while (System::Update())
     {
@@ -84,6 +88,7 @@ void PlayerUpdate() {
 
 void PlayerDraw() {
     Rect(player.posX, player.posY, player.width, player.height).draw(Palette::Orange);
+    FontAsset(U"font20")(player.life).draw(player.posX, player.posY, Palette::Black);
 }
 
 void enemeyInit() {
