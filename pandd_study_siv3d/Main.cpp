@@ -35,10 +35,14 @@ void Main()
 
     // アセットの登録
     FontAsset::Register(U"font20", 20);
-    TextureAsset::Register(U"player" ,U"player.png");
+    TextureAsset::Register(U"player", U"player.png");
+    TextureAsset::Register(U"enemy", U"enemy.png");
+    TextureAsset::Register(U"shot", U"shot.png");
+    TextureAsset::Register(U"back", U"back.png");
 
     while (System::Update())
     {
+        TextureAsset(U"back").resized(Scene::Width(), Scene::Height()).draw(0, 0);
         PlayerUpdate();
         enemeyUpdate();
         shotUpdate();
@@ -88,7 +92,6 @@ void PlayerUpdate() {
 }
 
 void PlayerDraw() {
-    //Rect(player.posX, player.posY, player.width, player.height).draw(Palette::Orange);
     TextureAsset(U"player").resized(player.width, player.height).draw(player.posX, player.posY);
     FontAsset(U"font20")(player.life).draw(player.posX, player.posY, Palette::Black);
 }
@@ -160,7 +163,7 @@ void enemeyUpdate() {
 void enemyDraw() {
     for (int i = 0; i < ENEMY_NUM; i++) {
         if (enemy[i].life != 0) {
-            Rect(enemy[i].posX, enemy[i].posY, enemy[i].width, enemy[i].height).draw(Palette::Red);
+            TextureAsset(U"enemy").resized(enemy[i].width, enemy[i].height).draw(enemy[i].posX, enemy[i].posY);
             FontAsset(U"font20")(enemy[i].life).draw(enemy[i].posX, enemy[i].posY, Palette::Black);
         }
     }
@@ -209,7 +212,7 @@ void shotUpdate() {
 void shotDraw() {
     for (int i = 0; i < SHOT_NUM; i++) {
         if (shot[i].life != 0) {
-            Rect(shot[i].posX, shot[i].posY, shot[i].width, shot[i].height).draw(Palette::White);
+            TextureAsset(U"shot").resized(shot[i].width, shot[i].height).draw(shot[i].posX, shot[i].posY);
         }
     }
 }
