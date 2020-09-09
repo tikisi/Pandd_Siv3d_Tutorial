@@ -35,6 +35,7 @@ void Main()
 
     // アセットの登録
     FontAsset::Register(U"font20", 20);
+    TextureAsset::Register(U"player" ,U"player.png");
 
     while (System::Update())
     {
@@ -87,7 +88,8 @@ void PlayerUpdate() {
 }
 
 void PlayerDraw() {
-    Rect(player.posX, player.posY, player.width, player.height).draw(Palette::Orange);
+    //Rect(player.posX, player.posY, player.width, player.height).draw(Palette::Orange);
+    TextureAsset(U"player").resized(player.width, player.height).draw(player.posX, player.posY);
     FontAsset(U"font20")(player.life).draw(player.posX, player.posY, Palette::Black);
 }
 
