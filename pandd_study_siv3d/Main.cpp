@@ -39,6 +39,12 @@ void Main()
     TextureAsset::Register(U"enemy", U"enemy.png");
     TextureAsset::Register(U"shot", U"shot.png");
     TextureAsset::Register(U"back", U"back.png");
+	AudioAsset::Register(U"bgm", U"bgm.wav");
+	AudioAsset::Register(U"se", U"se.wav");
+
+	AudioAsset(U"bgm").setLoop(true);
+	AudioAsset(U"bgm").play();
+
 
     while (System::Update())
     {
@@ -79,6 +85,7 @@ void PlayerUpdate() {
             Rect enemyRect = Rect(enemy[i].posX, enemy[i].posY, enemy[i].width, enemy[i].height);
             Rect playerRect = Rect(player.posX, player.posY, player.width, player.height);
             if (playerRect.intersects(enemyRect)) {
+				AudioAsset(U"se").playOneShot();
                 enemy[i].posX = Scene::Width();
                 enemy[i].posY = Random<int>(Scene::Height() - enemy[i].height);
                 enemy[i].life = 0;
@@ -142,6 +149,8 @@ void enemeyUpdate() {
                     Rect enemyRect = Rect(enemy[i].posX, enemy[i].posY, enemy[i].width, enemy[i].height);
                     Rect shotRect = Rect(shot[j].posX, shot[j].posY, shot[j].width, shot[j].height);
                     if (shotRect.intersects(enemyRect)) {
+						AudioAsset(U"se").playOneShot();
+
                         // 弾を待機状態へ
                         shot[j].life = 0;
                         shot[j].posX = 0;
